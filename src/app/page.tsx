@@ -1,8 +1,8 @@
 import { getAllPosts } from '@/lib/posts';
 import Link from 'next/link';
 
-export default function Home() {
-  const allPosts = getAllPosts();
+export default async function Home() {
+  const allPosts = await getAllPosts();
   const recentPosts = allPosts.slice(0, 3);
 
   return (
@@ -37,7 +37,7 @@ export default function Home() {
         </div>
 
         <div className="flex flex-col gap-10">
-          {recentPosts.map((post) => (
+          {recentPosts.map((post: any) => (
             <Link
               href={`/blog/${post.slug}`}
               key={post.slug}
