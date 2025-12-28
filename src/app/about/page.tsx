@@ -35,6 +35,54 @@ export default function About() {
           EMAIL
         </a>
       </div>
+
+      <div className="mt-24 space-y-12">
+        <h2 className="text-2xl font-black text-(--foreground) tracking-tighter">
+          About This Blog <span className="text-(--accent)">.</span>
+        </h2>
+
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          <div className="space-y-3">
+            <h3 className="font-bold text-(--accent) text-sm uppercase tracking-widest">
+              Core
+            </h3>
+            <p className="text-sm opacity-80 leading-relaxed">
+              Next.js 15와 TypeScript를 기반으로 제작되었으며, ISR 방식을 통해
+              60초마다 노션의 새로운 데이터를 동기화합니다.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="font-bold text-(--accent) text-sm uppercase tracking-widest">
+              Database
+            </h3>
+            <p className="text-sm opacity-80 leading-relaxed">
+              Notion API를 CMS로 사용하여 효율적인 콘텐츠 관리가 가능하며,
+              노션의 자유로운 편집 기능을 블로그에 그대로 담았습니다.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="font-bold text-(--accent) text-sm uppercase tracking-widest">
+              Comments
+            </h3>
+            <p className="text-sm opacity-80 leading-relaxed">
+              오픈소스 댓글 서비스인 Cusdis를 연동하여 사용자의 개인정보를
+              보호하면서 자유로운 소통 공간을 마련했습니다.
+            </p>
+          </div>
+
+          <div className="space-y-3">
+            <h3 className="font-bold text-(--accent) text-sm uppercase tracking-widest">
+              Deployment
+            </h3>
+            <p className="text-sm opacity-80 leading-relaxed">
+              Vercel을 통해 자동 배포 환경을 구축하였으며, 환경 변수(Env) 관리를
+              통해 보안성을 높였습니다.
+            </p>
+          </div>
+        </div>
+      </div>
       <div className="mt-32 border-t border-(--accent)/10 dark:border-white/10" />
     </div>
   );

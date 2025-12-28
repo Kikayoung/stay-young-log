@@ -1,6 +1,8 @@
 import { getAllPosts } from '@/lib/posts';
 import Link from 'next/link';
 
+export const revalidate = 60;
+
 export default async function Home() {
   const allPosts = await getAllPosts();
   const recentPosts = allPosts.slice(0, 3);
