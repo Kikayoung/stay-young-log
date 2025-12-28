@@ -1,6 +1,8 @@
 import { getAllPosts } from '@/lib/posts';
 import BlogList from './BlogList';
 
+export const revalidate = 60;
+
 export default async function BlogPage() {
   const allPosts = await getAllPosts();
 
