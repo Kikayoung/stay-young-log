@@ -11,6 +11,12 @@ export async function generateStaticParams() {
     slug: post.slug,
   }));
 }
+const slugify = (text: string) => {
+  return text
+    .toLowerCase()
+    .replace(/\s+/g, '-')
+    .replace(/[^\wㄱ-ㅎㅏ-ㅣ가-힣-]/g, '');
+};
 
 // params 앞에 await를 쓰는 것이 최신 Next.js의 규칙
 export default async function PostPage({
@@ -140,7 +146,19 @@ export default async function PostPage({
             prose-blockquote:border-l-4 prose-blockquote:border-[#6A9955] prose-blockquote:bg-(--vsc-tab) prose-blockquote:py-1 prose-blockquote:px-6 prose-blockquote:text-[#6A9955]
           "
           >
-            <MDXRemote source={post.content} />
+            <MDXRemote
+              source={post.content}
+              components={{
+                h2: (props) => {
+                  const id = slugify(String(props.children));
+                  return <h2 {...props} id={id} className="scroll-mt-30" />;
+                },
+                h3: (props) => {
+                  const id = slugify(String(props.children));
+                  return <h3 {...props} id={id} className="scroll-mt-30" />;
+                },
+              }}
+            />{' '}
           </div>
         </section>
 

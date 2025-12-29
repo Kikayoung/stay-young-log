@@ -39,6 +39,7 @@ export async function getAllPosts() {
         description:
           page.properties.Description?.rich_text[0]?.plain_text || '',
         thumbnail: thumbnail,
+        tags: page.properties.Tags?.multi_select?.map((t: any) => t.name) || [],
       };
     });
   } catch (error) {
@@ -73,6 +74,8 @@ export async function getPostData(slug: string) {
       category: page.properties.Category?.select?.name,
       description: page.properties.Description?.rich_text[0]?.plain_text || '',
       thumbnail: thumbnail,
+      tags:
+        page.properties.Tags?.multi_select?.map((tag: any) => tag.name) || [],
     };
   } catch (error) {
     console.error('본문 불러오기 실패:', error);
