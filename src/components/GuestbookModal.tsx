@@ -1,40 +1,48 @@
+'use client';
+import { useGuestbook } from './GuestbookProvider';
+import { useEffect, useState } from 'react';
 import { supabase } from '@/lib/supabase';
-import GuestbookInput from '@/components/GuestbookInput';
+import GuestbookInput from './GuestbookInput';
 
-export const revalidate = 0; // 방명록이니까 항상 최신 데이터
+export default function GuestbookModal() {
+  const { isOpen, close } = useGuestbook();
+  const [logs, setLogs] = useState<any[]>([]);
 
-async function getGuestbookLogs() {
-  const { data } = await supabase
-    .from('guestbook')
-    .select('*')
-    .order('created_at', { ascending: false });
-  return data || [];
-}
+  // 데이터 가져오기 (클라이언트 방식)
+  const fetchLogs = async () => {
+    const { data } = await supabase
+      .from('guestbook')
+      .select('*')
+      .order('created_at', { ascending: false });
+    setLogs(data || []);
+  };
 
-export default async function GuestbookPage() {
-  const logs = await getGuestbookLogs();
+  useEffect(() => {
+    if (isOpen) {
+      fetchLogs();
+    }
+  }, [isOpen]);
+
+  if (!isOpen) return null;
 
   return (
-    <div className="flex flex-col items-center justify-center font-mono p-6 bg-(--background)">
-      <div className="w-full max-w-3xl bg-(--vsc-tab) border border-(--vsc-border) shadow-2xl rounded-lg overflow-hidden relative z-10 my-4">
-        <div className="px-4 py-2 bg-(--background) border-b border-(--vsc-border) flex items-center gap-2">
-          <div className="flex gap-1.5 group">
-            {' '}
-            <div className="w-3 h-3 rounded-full bg-[#ff5f56] flex items-center justify-center text-[10px] text-black/70 transition-all">
-              <span className="opacity-0 group-hover:opacity-100">✕</span>
-            </div>
-            <div className="w-3 h-3 rounded-full bg-[#ffbd2e] flex items-center justify-center text-[10px] text-black/70 transition-all">
-              <span className="opacity-0 group-hover:opacity-100">−</span>
-            </div>
-            <div className="w-3 h-3 rounded-full bg-[#27c93f] flex items-center justify-center text-[10px] text-black/70 transition-all">
-              <span className="opacity-0 group-hover:opacity-100">+</span>
-            </div>
+    <div className="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-black/50 backdrop-blur-sm animate-fade-in">
+      <div className="absolute inset-0" onClick={close} />
+
+      <div className="w-full max-w-2xl bg-(--vsc-tab) border border-(--vsc-border) shadow-2xl rounded-lg overflow-hidden relative z-10 animate-zoom-in">
+        <div className="px-4 py-2 bg-(--background) border-b border-(--vsc-border) flex items-center justify-between">
+          <div className="flex gap-1.5">
+            <div
+              onClick={close}
+              className="w-3 h-3 rounded-full bg-[#ff5f56] cursor-pointer hover:brightness-75"
+            />
+            <div className="w-3 h-3 rounded-full bg-[#ffbd2e]" />
+            <div className="w-3 h-3 rounded-full bg-[#27c93f]" />
           </div>
-          <span className="text-[11px] opacity-40 ml-2 italic">
-            tail -f guestbook.log — 80x24
+          <span className="text-[11px] opacity-40 italic font-mono">
+            guestbook.log — terminal
           </span>
         </div>
-
         <div className="p-8 text-left space-y-6">
           {/* 환경 정보 */}
           <div className="flex flex-wrap gap-2 text-[13px]">

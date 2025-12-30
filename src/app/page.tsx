@@ -8,8 +8,8 @@ export default async function Home() {
   const recentPosts = allPosts.slice(0, 3);
 
   return (
-    <div className="max-w-5xl mx-auto py-4 font-mono animate-fade-in">
-      <div className="bg-(--background) border border-(--vsc-border) border-t-0 shadow-xl overflow-hidden">
+    <div className="mx-auto py-4 font-mono animate-fade-in">
+      <div className="bg-(--background) border-(--vsc-border) shadow-xl overflow-hidden">
         <section className="relative p-6 md:p-12 border-b border-(--vsc-border)">
           <div className="absolute top-4 right-8 opacity-5 select-none text-[10px] leading-tight">
             {'import React from "react";'}

@@ -58,3 +58,13 @@ html {
   background: var(--vsc-border);
   border-radius: 10px;
 }
+
+.custom-scrollbar::-webkit-scrollbar {
+  width: 10px;
+}
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: rgba(121, 121, 121, 0.2);
+}
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: rgba(121, 121, 121, 0.4);
+}

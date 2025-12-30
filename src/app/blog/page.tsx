@@ -8,7 +8,7 @@ export default async function BlogPage() {
 
   return (
     <main className="w-full py-4 animate-fade-in font-mono">
-      <div className="bg-(--background)  border-(--vsc-border) border-t-0 shadow-2xl">
+      <div className="bg-(--background)  border-(--vsc-border) border-b-0 shadow-xl">
         <header className="p-8 md:p-12 border-b border-(--vsc-border) relative overflow-hidden">
           <div className="absolute top-0 right-0 p-4 opacity-[0.03] text-[10px] select-none leading-tight pointer-events-none">
             {Array.from({ length: 10 }).map((_, i) => (
@@ -94,7 +94,7 @@ export default async function BlogPage() {
           </div>
         </header>
 
-        <div className="p-0">
+        <div className="p-8">
           <BlogList allPosts={allPosts} />
         </div>
       </div>
