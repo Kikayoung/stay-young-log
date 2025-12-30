@@ -9,6 +9,7 @@
     "lint": "eslint"
   },
   "dependencies": {
+    "@google/generative-ai": "^0.24.1",
     "@notionhq/client": "^2.2.3",
     "@supabase/supabase-js": "^2.89.0",
     "eslint-config-prettier": "^10.1.8",

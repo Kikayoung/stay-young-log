@@ -1,39 +1,53 @@
 'use client';
 
 import { useState } from 'react';
-import { useRouter } from 'next/navigation';
 import { supabase } from '@/lib/supabase';
 
-export default function GuestbookInput() {
-  const [newMsg, setNewMsg] = useState('');
-  const router = useRouter();
+interface GuestbookInputProps {
+  onCreated?: () => void;
+}
 
-  const handleSubmit = async (e: React.KeyboardEvent) => {
-    if (e.key === 'Enter' && newMsg.trim()) {
-      const { error } = await supabase
-        .from('guestbook')
-        .insert([{ content: newMsg, username: 'guest' }]);
+export default function GuestbookInput({ onCreated }: GuestbookInputProps) {
+  const [content, setContent] = useState('');
+  const [isLoading, setIsLoading] = useState(false);
 
-      if (!error) {
-        setNewMsg('');
-        router.refresh(); // 서버 컴포넌트 데이터를 다시 불러오게 함!
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!content.trim() || isLoading) return;
+
+    setIsLoading(true);
+    try {
+      const { error } = await supabase.from('guestbook').insert([{ content }]);
+
+      if (error) throw error;
+
+      setContent('');
+
+      // 글 작성이 성공하면 부모가 준 함수(fetchLogs)를 실행!
+      if (onCreated) {
+        onCreated();
       }
+    } catch (error) {
+      alert('로그 기록에 실패했습니다.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
   return (
-    <div className="flex gap-2 text-[13px] items-center text-(--accent)">
-      <span className="text-[#4EC9B0]">➜</span>
-      <span className="text-[#569CD6]">append</span>
-      <input
-        type="text"
-        value={newMsg}
-        onChange={(e) => setNewMsg(e.target.value)}
-        onKeyDown={handleSubmit}
-        placeholder="로그를 추가하세요..."
-        className="bg-transparent outline-none grow text-(--foreground) placeholder:opacity-20 border-b border-transparent focus:border-(--accent)/30 transition-all"
-        autoFocus
+    <form onSubmit={handleSubmit} className="flex flex-col gap-2">
+      <textarea
+        value={content}
+        onChange={(e) => setContent(e.target.value)}
+        placeholder="로그 메시지를 입력하세요... (Shift + Enter로 줄바꿈)"
+        className="w-full bg-transparent border-none outline-none text-[13px] text-(--foreground) min-h-15 resize-none p-2"
+        onKeyDown={(e) => {
+          if (e.key === 'Enter' && !e.shiftKey) {
+            e.preventDefault();
+            handleSubmit(e);
+          }
+        }}
       />
-    </div>
+    </form>
   );
 }

@@ -6,9 +6,9 @@ import { usePathname } from 'next/navigation';
 // import MyCursor from '@/components/MyCursor';
 import { ThemeProvider } from '@/components/ThemeProvider';
 import ThemeToggle from '@/components/ThemeToggle';
-import { GuestbookProvider } from '@/components/GuestbookProvider';
-import GuestbookTrigger from '@/components/GuestbookTrigger';
-import GuestbookModal from '@/components/GuestbookModal';
+import { AICopilotProvider } from '@/components/AIChat/AICopilotProvider';
+import AICopilotTrigger from '@/components/AIChat/AICopilotTrigger';
+import AICopilotModal from '@/components/AIChat/AICopilotModal';
 
 export default function RootLayout({
   children,
@@ -38,7 +38,7 @@ export default function RootLayout({
       <body className="antialiased flex flex-col min-h-screen bg-(--background) text-(--foreground) transition-colors duration-300 font-mono h-screen">
         <ThemeProvider>
           {/* <MyCursor /> */}
-          <GuestbookProvider>
+          <AICopilotProvider>
             <header className="fixed top-0 z-50 w-full bg-(--vsc-tab) border-b border-(--vsc-border) backdrop-blur-md">
               <nav className="max-w-6xl mx-auto px-6 h-12 flex items-center justify-between relative">
                 <div className="flex items-center gap-4">
@@ -192,8 +192,8 @@ export default function RootLayout({
                 </div>
               </div>
             </main>
-            <GuestbookTrigger />
-            <GuestbookModal />
+            <AICopilotTrigger />
+            <AICopilotModal />
             <footer className="bg-[#007ACC] text-white py-1 px-4 text-[11px] font-medium flex justify-between items-center fixed bottom-0 w-full z-50">
               <div className="flex items-center space-x-4">
                 <span className="hover:bg-white/10 px-2 cursor-pointer">
@@ -211,7 +211,7 @@ export default function RootLayout({
                 <span className="bg-white/20 px-2">Prettier</span>
               </div>
             </footer>
-          </GuestbookProvider>
+          </AICopilotProvider>
           <div className="h-6"></div>
         </ThemeProvider>
       </body>
