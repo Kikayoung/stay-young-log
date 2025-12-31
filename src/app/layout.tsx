@@ -36,6 +36,12 @@ export default function RootLayout({
   return (
     <html lang="ko" suppressHydrationWarning>
       <body className="antialiased flex flex-col min-h-screen bg-(--background) text-(--foreground) transition-colors duration-300 font-mono h-screen">
+        <head>
+          <meta
+            name="google-site-verification"
+            content="google-site-verification=rf3bBkNVMMbHw31ppHojzF8le4l54jcGHp7QB73KrzU"
+          />
+        </head>
         <ThemeProvider>
           {/* <MyCursor /> */}
           <AICopilotProvider>
@@ -215,10 +221,6 @@ export default function RootLayout({
           <div className="h-6"></div>
         </ThemeProvider>
       </body>
-      <meta
-        name="google-site-verification"
-        content="google-site-verification=rf3bBkNVMMbHw31ppHojzF8le4l54jcGHp7QB73KrzU"
-      />
     </html>
   );
 }
