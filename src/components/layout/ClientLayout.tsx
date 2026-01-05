@@ -1,7 +1,7 @@
 'use client';
 
 import { usePathname } from 'next/navigation';
-import { useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { ThemeProvider } from '@/components/shared/ThemeProvider';
 import { AICopilotProvider } from '@/components/ai-chat/AICopilotProvider';
@@ -33,6 +33,14 @@ export default function ClientLayout({
     tab.path === '/' ? pathname === '/' : pathname.startsWith(tab.path),
   ) || { name: 'Untitled', icon: '??', color: '#858585' };
 
+  useEffect(() => {
+    if (scrollRef.current) {
+      scrollRef.current.scrollTo({
+        top: 0,
+        behavior: 'smooth',
+      });
+    }
+  }, [pathname]);
   return (
     <ThemeProvider>
       <AICopilotProvider>
@@ -87,7 +95,7 @@ export default function ClientLayout({
           </nav>
         </header>
 
-        <main className="flex-1 flex pt-12 overflow-hidden justify-center items-center">
+        <main className="h-screen flex pt-12 pb-5.5 overflow-hidden">
           <div className="w-full h-full border-y border-(--vsc-border) bg-(--background) flex flex-row overflow-hidden mx-auto ">
             <aside className="w-12 shrink-0 bg-(--vsc-tab) border-r border-(--vsc-border) flex flex-col items-center py-4 gap-4 hidden lg:flex">
               {['explorer', 'search', 'extensions'].map((tab) => (
