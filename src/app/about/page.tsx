@@ -1,5 +1,3 @@
-'use client';
-
 import MyTimeline from '@/components/about/MyCareer';
 
 export default function About() {
