@@ -41,6 +41,10 @@ const slugify = (text: string) => {
   );
 };
 
+const sanitizeMdxContent = (content: string) => {
+  return content.replace(/<([^>\n]*[ㄱ-ㅎㅏ-ㅣ가-힣][^>\n]*)>/g, '&lt;$1&gt;');
+};
+
 // params 앞에 await를 쓰는 것이 최신 Next.js의 규칙
 export default async function PostPage({
   params,
@@ -62,6 +66,8 @@ export default async function PostPage({
       </div>
     );
   }
+
+  const safeContent = sanitizeMdxContent(post.content);
 
   const allPosts = await getAllPosts();
   const currentIndex = allPosts.findIndex((p: any) => p.slug === slug);
@@ -154,7 +160,7 @@ export default async function PostPage({
         <section className="relative pl-10 border-l border-(--vsc-border) mb-20">
           <div className={proseStyles}>
             <MDXRemote
-              source={post.content}
+              source={safeContent}
               options={{
                 mdxOptions: {
                   remarkPlugins: [remarkBreaks],
