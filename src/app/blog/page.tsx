@@ -1,7 +1,9 @@
 import { getAllPosts } from '@/lib/posts';
+import { Suspense } from 'react';
 import BlogList from './BlogList';
 
 export const revalidate = 60;
+const POSTS_PER_PAGE = 10;
 
 export default async function BlogPage() {
   const allPosts = await getAllPosts();
@@ -95,7 +97,9 @@ export default async function BlogPage() {
         </header>
 
         <div className="p-8">
-          <BlogList allPosts={allPosts} />
+          <Suspense fallback={<div className="py-10 text-sm opacity-50">Loading posts...</div>}>
+            <BlogList allPosts={allPosts} postsPerPage={POSTS_PER_PAGE} />
+          </Suspense>
         </div>
       </div>
     </main>
